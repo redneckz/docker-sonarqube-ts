@@ -1,12 +1,14 @@
-FROM openjdk:8-alpine
+FROM node:10
 
 ARG RELEASE=4.2.0.1873
 ARG TS=3.4.5
 
 LABEL maintainer="Alexander Alexandrov <aalexandrovv@gmail.com>"
 
-RUN apk add --no-cache --update curl grep sed unzip nodejs npm && \
+RUN apt-get update && apt-get -y install openjdk-8-jdk && \
     npm install -g typescript@${TS}
+
+RUN java -version
 
 ENV SONAR_RUNNER sonar-scanner-${RELEASE}-linux
 ENV SONAR_RUNNER_HOME /opt/${SONAR_RUNNER}
